@@ -6,4 +6,4 @@ Oobbit on Redditin kaltainen sosiaalisen media, joka painottaa käyttäjien lis�
 
 ## Linkit
 
-[Dokumentaatio](docs/Dokumentaatio.pdf) (PDF)
+[Dokumentaatio](/blob/master/docs/dokumentaatio.pdf) (PDF)
