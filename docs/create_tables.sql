@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`links` (
   `creator` INT NOT NULL,
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edit_time` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`, `create_time`),
+  PRIMARY KEY (`id`),
   INDEX `creator_idx` (`creator` ASC),
   INDEX `catgory_idx` (`category` ASC),
   CONSTRAINT `link_creator_id`
