@@ -1,0 +1,79 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--
+    Aineopintojen harjoitustyö: Tietokantasovellus
+    Helsingin yliopisto Tietojenkäsittelytieteen laitos
+    Ooppa 2015 - GNU General Public License, version 3.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="description" content="TODO" />
+        <meta name="author" content="Ooppa" />
+        <title>Oobbit</title>
+
+        <link th:href="@{/oobbit.css}" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+        <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div th:include="fragments :: nav"></div>
+
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Add new link</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Add a new link to category <strong>Videos</strong>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="/">
+                                    <h2>Link</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                        <input type="text" class="form-control" placeholder="https://www.example.com" />
+                                    </div>
+                                    <h2>Title</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-header"></i></span>
+                                        <input type="text" class="form-control" placeholder="Title for the link" />
+                                    </div>
+                                    <h2>Content</h2>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="5" maxlength="10000"></textarea>
+                                    </div>
+                                    <hr />
+                                    <button type="submit" class="btn btn-lg btn-success">Confirm!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
+                <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+                <script th:attr="src=@{/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js}"></script>
+                <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
+                </body>
+
+                </html>

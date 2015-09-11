@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`users` (
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX `access_level_idx` (`access_level` ASC),
   PRIMARY KEY (`id`),
-  CONSTRAINT `access_level`
+  CONSTRAINT `user_access_level`
     FOREIGN KEY (`access_level`)
     REFERENCES `oobbit`.`access_levels` (`level`)
     ON DELETE NO ACTION
@@ -43,12 +43,12 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`links` (
   PRIMARY KEY (`id`, `create_time`),
   INDEX `creator_idx` (`creator` ASC),
   INDEX `catgory_idx` (`category` ASC),
-  CONSTRAINT `creator`
+  CONSTRAINT `link_creator_id`
     FOREIGN KEY (`creator`)
     REFERENCES `oobbit`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `catgory`
+  CONSTRAINT `link_catgory_id`
     FOREIGN KEY (`category`)
     REFERENCES `oobbit`.`categories` (`id`)
     ON DELETE NO ACTION
@@ -64,12 +64,12 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`connections` (
   `edit_time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`source_link_id`, `destination_link_id`),
   INDEX `destination_link_id_idx` (`destination_link_id` ASC),
-  CONSTRAINT `source_link_id`
+  CONSTRAINT `connection_source_link_id`
     FOREIGN KEY (`source_link_id`)
     REFERENCES `oobbit`.`links` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `destination_link_id`
+  CONSTRAINT `connection_destination_link_id`
     FOREIGN KEY (`destination_link_id`)
     REFERENCES `oobbit`.`links` (`id`)
     ON DELETE NO ACTION
@@ -84,9 +84,15 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`comments` (
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `link_id_idx` (`link_id` ASC),
-  CONSTRAINT `link_id`
+  INDEX `creator_idx` (`creator` ASC),
+  CONSTRAINT `comment_link_id`
     FOREIGN KEY (`link_id`)
     REFERENCES `oobbit`.`links` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `comment_creator_id`
+    FOREIGN KEY (`creator`)
+    REFERENCES `oobbit`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

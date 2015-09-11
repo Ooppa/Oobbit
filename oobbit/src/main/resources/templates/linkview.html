@@ -1,0 +1,163 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--
+    Aineopintojen harjoitustyö: Tietokantasovellus
+    Helsingin yliopisto Tietojenkäsittelytieteen laitos
+    Ooppa 2015 - GNU General Public License, version 3.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="description" content="TODO" />
+        <meta name="author" content="Ooppa" />
+        <title>Oobbit</title>
+
+        <link th:href="@{/oobbit.css}" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+        <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
+        <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div th:include="fragments :: nav"></div>
+
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="page-header">View Image</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Title for the link
+                            </div>
+                            <div class="panel-body">
+                                <h2>Title for the link</h2>
+                                <p>Imagine this as a wall of indepth commentary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                                <a class="btn btn-lg btn-success" href="https://i.imgur.com/6LCNnDm.jpg" target="_NEW">Open link</a>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Connections to other links
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <span class="badge">15 hours ago</span>
+                                            <a href="#"><i class="fa fa-picture-o"></i> Link to other link</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="badge">15 hours ago</span>
+                                            <a href="#"><i class="fa fa-play"></i> Link to other link</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="badge">15 hours ago</span>
+                                            <a href="#"><i class="fa fa-picture-o"></i> Link to other link</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="badge">22 hours ago</span>
+                                            <a href="#"><i class="fa fa-comments"></i> Link to other link</a>
+                                        </li>
+                                    </ul>
+                                    <a class="btn btn-success btn-sm"><i class="fa fa-plus"> Add new connection</i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Comments
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 hidden-xs">
+                                        <figure class="thumbnail">
+                                            <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            <figcaption class="text-center">Offline</figcaption>
+                                        </figure>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10">
+                                        <div class="panel panel-default arrow left">
+                                            <div class="panel-body">
+                                                <header class="text-left">
+                                                    <div class="comment-user"><i class="fa fa-user"></i> Catlover69</div>
+                                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Today, 15:48</time>
+                                                </header>
+                                                <div class="comment-post">
+                                                    <p>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                    </p>
+                                                </div>
+                                                <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 hidden-xs">
+                                        <figure class="thumbnail">
+                                            <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            <figcaption class="text-center">Online</figcaption>
+                                        </figure>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10">
+                                        <div class="panel panel-default arrow left">
+                                            <div class="panel-body">
+                                                <header class="text-left">
+                                                    <div class="comment-user"><i class="fa fa-user"></i> HeroCoderXXX</div>
+                                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Today, 15:32</time>
+                                                </header>
+                                                <div class="comment-post">
+                                                    <p>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                    </p>
+                                                </div>
+                                                <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form role="form" action="/">
+                                    <div class="form-group">
+                                        <label>Post a comment:</label>
+                                        <textarea class="form-control" rows="5" maxlength="1000"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-success pull-right">Send!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
+        <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <script th:attr="src=@{/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js}"></script>
+        <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
+    </body>
+
+</html>
