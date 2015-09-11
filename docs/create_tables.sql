@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`access_levels` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `oobbit`.`users` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -24,28 +24,42 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`users` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `oobbit`.`categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 CREATE TABLE IF NOT EXISTS `oobbit`.`links` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `content` MEDIUMTEXT NULL,
   `link` VARCHAR(255) NOT NULL,
+  `category` INT NOT NULL,
   `creator` INT NOT NULL,
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edit_time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`, `create_time`),
   INDEX `creator_idx` (`creator` ASC),
+  INDEX `catgory_idx` (`category` ASC),
   CONSTRAINT `creator`
     FOREIGN KEY (`creator`)
     REFERENCES `oobbit`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `catgory`
+    FOREIGN KEY (`category`)
+    REFERENCES `oobbit`.`categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `oobbit`.`connections` (
-  `source_link_id` INT NOT NULL,
+  `source_link_id` INT NOT NULL AUTO_INCREMENT,
   `destination_link_id` INT NOT NULL,
   `title` VARCHAR(255) NULL DEFAULT NULL,
-  `creator` MEDIUMTEXT NOT NULL,
+  `creator` INT NOT NULL,
   `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edit_time` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`source_link_id`, `destination_link_id`),
@@ -63,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`connections` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `oobbit`.`comments` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `link_id` INT NOT NULL,
   `creator` INT NOT NULL,
   `content` MEDIUMTEXT NULL,
