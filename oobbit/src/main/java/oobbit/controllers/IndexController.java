@@ -41,5 +41,6 @@ public class IndexController {
     public String viewLink(Model model) {
         return "linkview";
     }
+    
 
 }

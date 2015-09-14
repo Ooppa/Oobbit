@@ -1,0 +1,11 @@
+# Aineopintojen harjoitusty\u00f6: Tietokantasovellus
+# Helsingin yliopisto Tietojenk\u00e4sittelytieteen laitos
+# Ooppa 2015 - GNU General Public License, version 3.
+
+# This is the default MySQL connection settings for this software.
+# Please rename this tile to database.properties and then compile.
+
+host.property=localhost
+database.property=oobbit
+user.property=root
+password.property=root
