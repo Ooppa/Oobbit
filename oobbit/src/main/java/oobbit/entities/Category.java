@@ -5,15 +5,21 @@
  */
 package oobbit.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Ooppa
  */
-public class Category {
+public class Category implements Result {
 
     private int id;
     private String title;
     private String description;
+
+    public Category() {
+    }
 
     public int getId() {
         return id;
@@ -59,5 +65,12 @@ public class Category {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void parse(ResultSet set) throws SQLException {
+        this.id = set.getInt("id");
+        this.title = set.getString("title");
+        this.description = set.getString("description");
     }
 }

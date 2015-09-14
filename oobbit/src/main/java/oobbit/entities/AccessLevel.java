@@ -5,15 +5,21 @@
  */
 package oobbit.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Ooppa
  */
-public class AccessLevel {
+public class AccessLevel implements Result {
 
     private int level;
     private String name;
     private String description;
+
+    public AccessLevel() {
+    }
 
     public int getLevel() {
         return level;
@@ -59,6 +65,13 @@ public class AccessLevel {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void parse(ResultSet set) throws SQLException {
+        this.level = set.getInt("level");
+        this.name = set.getString("name");
+        this.description = set.getString("description");
     }
 
 }

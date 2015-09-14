@@ -5,13 +5,15 @@
  */
 package oobbit.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
  *
  * @author Ooppa
  */
-public class LinkConnection {
+public class LinkConnection implements Result {
 
     private int sourceLinkId;
     private int destinationLinkId;
@@ -19,6 +21,9 @@ public class LinkConnection {
     private int creator;
     private Date createTime;
     private Date editTime;
+
+    public LinkConnection() {
+    }
 
     public int getSourceLinkId() {
         return sourceLinkId;
@@ -92,6 +97,16 @@ public class LinkConnection {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void parse(ResultSet set) throws SQLException {
+        this.sourceLinkId = set.getInt("source_link_id");
+        this.destinationLinkId = set.getInt("destination_link_id");
+        this.title = set.getString("title");
+        this.creator = set.getInt("creator");
+        this.createTime = set.getTimestamp("create_time");
+        this.editTime = set.getTimestamp("edit_time");
     }
 
 }

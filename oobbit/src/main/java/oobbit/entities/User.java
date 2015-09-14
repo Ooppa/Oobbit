@@ -5,19 +5,24 @@
  */
 package oobbit.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
  *
  * @author Ooppa
  */
-public class User {
+public class User implements Result {
 
     private int id;
     private String username;
     private String email;
     private int accessLevel;
     private Date createTime;
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -79,6 +84,15 @@ public class User {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void parse(ResultSet set) throws SQLException {
+        this.id = set.getInt("id");
+        this.username = set.getString("username");
+        this.email = set.getString("email");
+        this.accessLevel = set.getInt("access_level");
+        this.createTime = set.getTimestamp("create_time");
     }
 
 }
