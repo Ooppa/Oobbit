@@ -19,8 +19,9 @@ public class Link implements Result {
     private String title;
     private String content;
     private String link;
-    private int category;
-    private int creator;
+    private String category;
+    private int creatorId;
+    private User creator;
     private Date createTime;
     private Date editTime;
 
@@ -59,19 +60,27 @@ public class Link implements Result {
         this.link = link;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public int getCreator() {
+    public int getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 
@@ -90,7 +99,7 @@ public class Link implements Result {
     public void setEditTime(Date editTime) {
         this.editTime = editTime;
     }
-    
+
     public boolean isEdited() {
         return this.editTime!=null;
     }
@@ -119,12 +128,13 @@ public class Link implements Result {
 
     @Override
     public void parse(ResultSet set) throws SQLException {
-        this.id = set.getInt("id");
+        this.id = set.getInt("link_id");
         this.title = set.getString("title");
         this.content = set.getString("content");
         this.link = set.getString("link");
-        this.category = set.getInt("category");
-        this.creator = set.getInt("creator");
+        this.category = set.getString("category");
+        this.creatorId = set.getInt("creator");
+        this.creator = null; // set later
         this.createTime = set.getTimestamp("create_time");
         this.editTime = set.getTimestamp("edit_time");
     }

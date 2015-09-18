@@ -88,7 +88,7 @@ public class User implements Result {
 
     @Override
     public void parse(ResultSet set) throws SQLException {
-        this.id = set.getInt("id");
+        this.id = set.getInt("user_id");
         this.username = set.getString("username");
         this.email = set.getString("email");
         this.accessLevel = set.getInt("access_level");

@@ -7,6 +7,7 @@ package oobbit.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
@@ -14,18 +15,18 @@ import java.sql.SQLException;
  */
 public class Category implements Result {
 
-    private int id;
+    private String id;
     private String title;
     private String description;
 
     public Category() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,7 +49,7 @@ public class Category implements Result {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67*hash+this.id;
+        hash = 23*hash+Objects.hashCode(this.id);
         return hash;
     }
 
@@ -61,7 +62,7 @@ public class Category implements Result {
             return false;
         }
         final Category other = (Category) obj;
-        if(this.id!=other.id) {
+        if(!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -69,7 +70,7 @@ public class Category implements Result {
 
     @Override
     public void parse(ResultSet set) throws SQLException {
-        this.id = set.getInt("id");
+        this.id = set.getString("category_id");
         this.title = set.getString("title");
         this.description = set.getString("description");
     }

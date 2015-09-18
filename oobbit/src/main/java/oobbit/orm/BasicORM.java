@@ -5,15 +5,21 @@
  */
 package oobbit.orm;
 
-import java.sql.SQLException;
-import java.util.List;
-import oobbit.orm.exceptions.NothingWasFoundException;
+import java.sql.Connection;
+import oobbit.database.ConnectionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Ooppa
  */
-public interface BasicORM {
-    public List<?> getAll() throws SQLException, NothingWasFoundException;
-    public Object getOne(int id) throws SQLException, NothingWasFoundException;
+public abstract class BasicORM {
+    @Autowired
+    private ConnectionManager connection;
+
+    public Connection getConnection() {
+        return connection.getConnection();
+    }
+    
+    
 }

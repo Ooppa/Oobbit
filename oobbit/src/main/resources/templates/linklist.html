@@ -36,55 +36,19 @@
                 
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="page-header">Images</h1>
+                        <h1 class="page-header" th:text="${category}">pagetitle</h1>
                     </div>
                 </div>
                 
-                <div class="row well link-list">
+                <div th:each="link : ${links}" class="row well link-list">
                     <div class="col-md-1">
-                        <span class="label label-success">15 minutes ago</span>
+                        <span th:text="${link.createTime}" class="label label-success">time</span>
                     </div>
                     <div class="col-md-10">
-                        <a href="a" class="link-title">Here be dragons</a>
+                        <a th:text="${link.title}" th:href="@{/view/{linkId}/(linkId=${link.id})}" class="link-title">title</a>
                     </div>
                     <div class="col-md-1">
-                        <i class="fa fa-user"></i> Nimimerkki
-                    </div>
-                </div>
-                
-                <div class="row well link-list">
-                    <div class="col-md-1">
-                        <span class="label label-success">15 minutes ago</span>
-                    </div>
-                    <div class="col-md-10">
-                        <a href="a" class="link-title">Here be kittens</a>
-                    </div>
-                    <div class="col-md-1">
-                        <i class="fa fa-user"></i> Nimimerkki
-                    </div>
-                </div>
-                
-                <div class="row well link-list">
-                    <div class="col-md-1">
-                        <span class="label label-success">15 minutes ago</span>
-                    </div>
-                    <div class="col-md-10">
-                        <a href="a" class="link-title">Here be ZOMBIES</a>
-                    </div>
-                    <div class="col-md-1">
-                        <i class="fa fa-user"></i> Nimimerkki
-                    </div>
-                </div>
-                
-                <div class="row well link-list">
-                    <div class="col-md-1">
-                        <span class="label label-success">15 minutes ago</span>
-                    </div>
-                    <div class="col-md-10">
-                        <a href="a" class="link-title">Here be lil' elf</a>
-                    </div>
-                    <div class="col-md-1">
-                        <i class="fa fa-user"></i> Nimimerkki
+                        <i class="fa fa-user"></i> <a th:href="@{/users/{userId}/(userId=${link.creator.id})}" th:text="${link.creator.username}"> nickname</a>
                     </div>
                 </div>
                 

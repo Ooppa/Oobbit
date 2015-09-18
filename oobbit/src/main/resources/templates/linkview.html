@@ -36,27 +36,31 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="page-header">View Image</h1>
+                        <h1 class="page-header">View Link</h1>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div class="panel-heading" th:text="${link.title}">
                                 Title for the link
                             </div>
                             <div class="panel-body">
-                                <h2>Title for the link</h2>
-                                <p>Imagine this as a wall of indepth commentary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                                <a class="btn btn-lg btn-success" href="https://i.imgur.com/6LCNnDm.jpg" target="_NEW">Open link</a>
+                                <h2 th:text="${link.title}">Title for the link</h2>
+                                <p th:text="${link.content}">Content</p>
+                                <a class="btn btn-lg btn-success" th:href="${link.link}" target="_NEW" title="Open link in new tab">Open link</a>
+                            </div>
+                            <div class="panel-footer">
+                                Created by <a th:href="@{/users/{userId}/(userId=${link.creator.id})}" th:text="${link.creator.username}"></a> at <i th:text="${link.createTime}"></i>.
+                                <strong th:if="${link.editTime}!=null" th:text="'Edited at ' + ${link.editTime}"></strong>
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Connections to other links
+                                    Connections to other links [NOT IMPLEMENTED]
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-group">
@@ -86,7 +90,7 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Comments
+                                Comments [NOT IMPLEMENTED]
                             </div>
                             <div class="panel-body">
                                 <div class="row">
