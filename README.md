@@ -16,4 +16,4 @@ Oobbit on Redditin kaltainen sosiaalisen media, joka painottaa käyttäjien lis�
 
 ### Demot (Päivitetty 18.9 16:50)
 
-[Kaikki tarvittavat demot](http://localhost:8181/)
+[Kaikki tarvittavat demot](http://ooppa.fi:8181/)
