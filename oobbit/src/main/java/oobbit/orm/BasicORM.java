@@ -6,6 +6,7 @@
 package oobbit.orm;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import oobbit.database.ConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,12 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ooppa
  */
 public abstract class BasicORM {
+
     @Autowired
     private ConnectionManager connection;
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         return connection.getConnection();
     }
-    
-    
+
 }

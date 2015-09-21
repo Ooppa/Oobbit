@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Catches Exceptions thrown by the system.
+ *
  * @author Ooppa
  */
 @ControllerAdvice

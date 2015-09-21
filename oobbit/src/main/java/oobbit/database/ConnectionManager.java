@@ -42,7 +42,10 @@ public class ConnectionManager {
         }
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if(connection.isClosed()){
+            connect(); // Reconnect if the connection is closed
+        }
         return connection;
     }
 
