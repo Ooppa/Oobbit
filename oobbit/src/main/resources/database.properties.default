@@ -9,3 +9,4 @@ host.property=localhost
 database.property=oobbit
 user.property=root
 password.property=root
+salt.property=Wsl6HmVCfJe9h84ftG0nzL2J9BceXp9SPMKpBFssmHHkqdDJ69haTyXgOitQX22x5tVhvnWWm2nfHFEM8hMmQFg4

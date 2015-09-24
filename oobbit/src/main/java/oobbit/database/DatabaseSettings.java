@@ -20,15 +20,17 @@ public class DatabaseSettings {
     private String database;
     private String user;
     private String password;
+    private String salt;
 
     public DatabaseSettings() {
     }
 
-    public DatabaseSettings(String host, String database, String user, String password) {
+    public DatabaseSettings(String host, String database, String user, String password, String salt) {
         this.host = host;
         this.database = database;
         this.user = user;
         this.password = password;
+        this.salt = salt;
     }
 
     public String getHost() {
@@ -54,6 +56,7 @@ public class DatabaseSettings {
     public void setUser(String user) {
         this.user = user;
     }
+    
 
     public String getPassword() {
         return password;
@@ -61,6 +64,14 @@ public class DatabaseSettings {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getConnectorString() {

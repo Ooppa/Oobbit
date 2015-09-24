@@ -11,5 +11,6 @@
         <property name="database" value="${database.property}" />
         <property name="user" value="${user.property}" />
         <property name="password" value="${password.property}" />
+        <property name="salt" value="${salt.property}" />
     </bean>
 </beans>

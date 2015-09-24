@@ -41,7 +41,7 @@ public class LinkController {
     @RequestMapping("/all/recent")
     public String list(Model model) throws SQLException {
         model.addAttribute("category", "All");
-        model.addAttribute("links", links.getAllWithUser(DEFAULT_AMOUNT_OF_LINKS));
+        model.addAttribute("links", links.getAll(DEFAULT_AMOUNT_OF_LINKS));
         return "linklist";
     }
 

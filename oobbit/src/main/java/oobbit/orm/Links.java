@@ -23,15 +23,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Links extends BasicORM {
 
-    /**
-     * Adds a new link to the database and returns its id.
-     *
-     * @param link Link to add
-     *
-     * @return Auto Incremented id of the link
-     *
-     * @throws SQLException Failed SQL
-     */
     public int add(Link link) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("INSERT INTO `oobbit`.`links`(`link_id`,`title`,`content`,`link`,`category`,`creator`,`create_time`,`edit_time`) "
                 +"VALUES(NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, NULL);", Statement.RETURN_GENERATED_KEYS);
@@ -50,19 +41,16 @@ public class Links extends BasicORM {
         return -1;
     }
 
-    public List<Link> getAll(int limit) throws SQLException {
-        PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM oobbit.links LIMIT ?;");
-        statement.setInt(1, limit);
+    public int update(Link link) throws SQLException {
+        PreparedStatement statement = getConnection().prepareStatement("UPDATE `oobbit`.`links` SET `title` = ?, `content` = ?, `link` = ?, `edit_time` = CURRENT_TIMESTAMP WHERE `links`.`link_id` = ?;");
+        statement.setString(1, link.getTitle());
+        statement.setString(2, link.getContent());
+        statement.setString(3, link.getLink());
+        statement.setInt(4, link.getId());
 
-        return parseResultSet(statement.executeQuery());
-    }
+        statement.executeUpdate();
 
-    public List<Link> getAll(int limit, String category) throws SQLException {
-        PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM oobbit.links WHERE category = ? LIMIT ?;");
-        statement.setString(1, category);
-        statement.setInt(2, limit);
-
-        return parseResultSet(statement.executeQuery());
+        return link.getId();
     }
 
     public Link getOne(int id) throws SQLException, NothingWasFoundException {
@@ -85,35 +73,33 @@ public class Links extends BasicORM {
         }
     }
 
-    public List<Link> getAllWithUser(int limit) throws SQLException {
+    public List<Link> getAll(int limit, String category) throws SQLException {
+        PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM oobbit.links AS q1 LEFT JOIN users AS q2 ON q1.creator = q2.user_id WHERE q1.category = ? LIMIT ?;");
+        statement.setString(1, category);
+        statement.setInt(2, limit);
+
+        return parseResults(statement.executeQuery());
+    }
+
+    public List<Link> getAll(int limit) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM oobbit.links AS q1 LEFT JOIN users AS q2 ON q1.creator = q2.user_id LIMIT ?;");
         statement.setInt(1, limit);
 
-        ResultSet query = statement.executeQuery();
+        return parseResults(statement.executeQuery());
+    }
 
+    private ArrayList<Link> parseResults(ResultSet results) throws SQLException {
         ArrayList<Link> links = new ArrayList<>();
 
-        while(query.next()) {
+        while(results.next()) {
             Link link = new Link();
-            link.parse(query);
+            link.parse(results);
 
             User user = new User();
-            user.parse(query);
+            user.parse(results);
 
             link.setCreator(user);
 
-            links.add(link);
-        }
-
-        return links;
-    }
-
-    private ArrayList<Link> parseResultSet(ResultSet set) throws SQLException {
-        ArrayList<Link> links = new ArrayList<>();
-
-        while(set.next()) {
-            Link link = new Link();
-            link.parse(set);
             links.add(link);
         }
 

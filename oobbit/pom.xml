@@ -50,6 +50,11 @@
             <version>20150501.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
     </dependencies>
 	
     <build>
