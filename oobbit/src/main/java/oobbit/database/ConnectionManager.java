@@ -10,10 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * Performs queries to the connection given
+ * Handles the connection to the database.
  *
  * @author Ooppa
  */
@@ -37,16 +38,28 @@ public class ConnectionManager {
             connection = DriverManager.getConnection(settings.getConnectorString());
         } catch(SQLException ex) {
             connection = null;
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, "Unexpected SQLException occured.", ex);
             System.exit(1); // Force quit (TODO?)
         }
     }
 
     public Connection getConnection() throws SQLException {
-        if(connection.isClosed()){
+        if(connection.isClosed()) {
             connect(); // Reconnect if the connection is closed
         }
         return connection;
+    }
+
+    /*
+     * Pings the database every minute starting from 10 seconds after startup.
+     * This will keep the connection to the database up and prevent timeout.
+     */
+    @Scheduled(initialDelay = 10000, fixedRate = 60000)
+    public void pingDatabaseConnection() throws SQLException {
+        try(Statement statement = connection.createStatement()) {
+            statement.execute("/* ping */ SELECT 1;"); // Returns int = 1
+            statement.close();
+        }
     }
 
 }
