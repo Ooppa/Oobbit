@@ -32,6 +32,10 @@ body {
     font-size: 45px !important;
 }
 
+.notfound-text {
+    color: #b92c28;
+}
+
 // Comments section
 
 .comment-list .row {

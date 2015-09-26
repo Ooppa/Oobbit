@@ -28,7 +28,7 @@ public class Links extends BasicORM {
                 +"VALUES(NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, NULL);", Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, link.getTitle());
         statement.setString(2, link.getContent());
-        statement.setString(3, link.getLink());
+        statement.setString(3, link.getUrl());
         statement.setString(4, link.getCategory());
         statement.setInt(5, link.getCreatorId());
 
@@ -45,7 +45,7 @@ public class Links extends BasicORM {
         PreparedStatement statement = getConnection().prepareStatement("UPDATE `oobbit`.`links` SET `title` = ?, `content` = ?, `link` = ?, `edit_time` = CURRENT_TIMESTAMP WHERE `links`.`link_id` = ?;");
         statement.setString(1, link.getTitle());
         statement.setString(2, link.getContent());
-        statement.setString(3, link.getLink());
+        statement.setString(3, link.getUrl());
         statement.setInt(4, link.getId());
 
         statement.executeUpdate();
@@ -104,5 +104,13 @@ public class Links extends BasicORM {
         }
 
         return links;
+    }
+
+    public void remove(int linkId) throws SQLException {
+        PreparedStatement statement = getConnection().prepareStatement("DELETE FROM `oobbit`.`links` WHERE `links`.`link_id` = ?;");
+        statement.setInt(1, linkId);
+        
+        statement.executeUpdate();
+        statement.close();
     }
 }

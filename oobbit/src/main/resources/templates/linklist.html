@@ -7,58 +7,38 @@
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        <meta name="description" content="TODO" />
-        <meta name="author" content="Ooppa" />
-        <title>Oobbit</title>
-        
-        <link th:href="@{/oobbit.css}" rel="stylesheet" />
-        <link href='https://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
-        <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" />
-        <link th:href="@{/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css}" rel="stylesheet" />
-        <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
-        <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
+    <head th:include="fragments :: head"></head>
 
     <body>
         <div id="wrapper">
             <div th:include="fragments :: nav"></div>
 
             <div id="page-wrapper">
-                
+
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="page-header" th:text="${category}">pagetitle</h1>
+                        <h1 class="page-header" th:text="${category.title}">Category title</h1>
                     </div>
                 </div>
-                
+
                 <div th:each="link : ${links}" class="row well link-list">
-                    <div class="col-md-1">
-                        <span th:text="${link.createTime}" class="label label-success">time</span>
+                    <div class="col-md-2">
+                        <span th:text="${link.createTime}" class="label label-success">timestamp</span>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <a th:text="${link.title}" th:href="@{/view/{linkId}/(linkId=${link.id})}" class="link-title">title</a>
                     </div>
-                    <div class="col-md-1">
-                        <i class="fa fa-user"></i> <a th:href="@{/users/{userId}/(userId=${link.creator.id})}" th:text="${link.creator.username}"> nickname</a>
+                    <div class="col-md-2">
+                        <div class="pull-right">
+                            <a th:href="@{/user/{userId}/(userId=${link.creator.id})}" ><i class="fa fa-user"></i> <i th:text="${link.creator.username}">username</i></a>
+                        </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
-        <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
-        <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
-        <script th:attr="src=@{/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js}"></script>
-        <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
+        <div th:include="fragments :: scripts" th:remove="tag"></div>
     </body>
 
 </html>

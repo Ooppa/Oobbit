@@ -8,14 +8,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Oobbit ERROR</title>
+        <title>CHANGE LOG</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body style="background-color: #F2DBD3;">
-        <h1 style="color: #FF4200;">Oobbit ERROR</h1>
-        <hr />
-        <h2 th:text="${title}">title</h2>
-        <p th:text="${content}">content</p>
+    <body>
+        <h1>Oobbit, CHANGE LOG</h1>
+        <p>
+            Päivitetty: 24.9 kello 15:40
+        </p>
+        <ul>
+            <li><a th:href="@{/all/recent}">Listaus, joka toimii tietokannasta</a></li>
+            <li><a th:href="@{/v/add}">Lisää linkki kategoriaan VIDEOT</a></li>
+            <li><a th:href="@{/view/1}">Lisättyjen linkkien katsominen toimii, esimerkiksi tässä</a></li>
+        </ul>
     </body>
 </html>

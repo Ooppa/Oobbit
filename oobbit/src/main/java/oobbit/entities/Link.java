@@ -8,6 +8,8 @@ package oobbit.entities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 /**
  *
@@ -16,9 +18,16 @@ import java.util.Date;
 public class Link implements Result {
 
     private int id;
+
+    @Size(min = 3, max = 255)
     private String title;
+
+    @Size(min = 5, max = 100000)
     private String content;
-    private String link;
+
+    @URL
+    private String url;
+
     private String category;
     private int creatorId;
     private User creator;
@@ -52,12 +61,12 @@ public class Link implements Result {
         this.content = content;
     }
 
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getCategory() {
@@ -131,7 +140,7 @@ public class Link implements Result {
         this.id = set.getInt("link_id");
         this.title = set.getString("title");
         this.content = set.getString("content");
-        this.link = set.getString("link");
+        this.url = set.getString("link");
         this.category = set.getString("category");
         this.creatorId = set.getInt("creator");
         this.creator = null; // set later

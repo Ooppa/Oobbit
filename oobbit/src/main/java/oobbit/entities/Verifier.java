@@ -34,7 +34,7 @@ public class Verifier {
     public boolean verify(Link link) throws NotValidObjectException, SQLException {
         checkBounds(3, 255, link.getTitle(), "Title");
         checkBounds(5, 100000, link.getContent(), "Content");
-        checkBounds(5, 255, link.getLink(), "Link");
+        checkBounds(5, 255, link.getUrl(), "Link");
         checkCategory(link.getCategory());
 
         return true;

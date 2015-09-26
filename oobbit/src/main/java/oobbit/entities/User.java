@@ -8,6 +8,8 @@ package oobbit.entities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -16,8 +18,13 @@ import java.util.Date;
 public class User implements Result {
 
     private int id;
+    
+    @Size(min=2, max=30)
     private String username;
+    
+    @Email
     private String email;
+    
     private int accessLevel;
     private Date createTime;
 

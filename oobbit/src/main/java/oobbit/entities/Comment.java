@@ -8,6 +8,7 @@ package oobbit.entities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -18,7 +19,10 @@ public class Comment implements Result {
     private int id;
     private int linkId;
     private int creator;
+    
+    @Size(min=2, max=5000)
     private String content;
+    
     private Date createTime;
 
     public Comment() {
