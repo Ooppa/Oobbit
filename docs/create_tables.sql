@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`links` (
   CONSTRAINT `link_creator_id`
     FOREIGN KEY (`creator`)
     REFERENCES `oobbit`.`users` (`user_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `link_catgory_id`
     FOREIGN KEY (`category`)
@@ -67,12 +67,12 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`connections` (
   CONSTRAINT `connection_source_link_id`
     FOREIGN KEY (`source_link_id`)
     REFERENCES `oobbit`.`links` (`link_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `connection_destination_link_id`
     FOREIGN KEY (`destination_link_id`)
     REFERENCES `oobbit`.`links` (`link_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `oobbit`.`comments` (
   CONSTRAINT `comment_link_id`
     FOREIGN KEY (`link_id`)
     REFERENCES `oobbit`.`links` (`link_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `comment_creator_id`
     FOREIGN KEY (`creator`)
