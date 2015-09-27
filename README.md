@@ -15,3 +15,5 @@ Oobbit on Redditin kaltainen sosiaalisen media, joka painottaa k채ytt채jien lis�
 [Kirjautuminen](http://ooppa.fi:8181/login) (k채ytt채j채: admin@ooppa.fi salasana: admin)
 
 Linkkien lis채ys, muokkaus ja poisto toimii.
+
+[Muokkaus ja poisto](http://ooppa.fi:8181/view/1) Sininen ja punainen pieni nappi paneelin alareunassa.
