@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
+//@ImportResource("classpath:thymeleaf.xml") TODO
 public class Application {
 
     public static void main(String[] args) {

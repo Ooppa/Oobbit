@@ -32,7 +32,7 @@ public class UserController {
         try {
             model.addAttribute("user", users.getCurrentUser());
         } catch(NotLoggedInException ex) {
-            return "redirect:/login"; // Force login
+            return "redirect:/login"; // Force login, TODO
         }
         
         return "me";
