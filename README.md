@@ -8,12 +8,10 @@ Oobbit on Redditin kaltainen sosiaalisen media, joka painottaa k채ytt채jien lis�
 
 [Dokumentaatio](/docs/dokumentaatio.pdf) (PDF)
 
-[Tietokantataulujen pystytyslauseet ](/docs/create_tables.sql) (SQL)
+### Demot (P채ivitetty 27.9 15:00)
 
-[Tietokantataulujen poistolauseet](/docs/drop_tables.sql) (SQL)
+[Etusivu](http://ooppa.fi:8181/)
 
-[Testidatan lis채yslauseet](/docs/add_test_data.sql) (SQL)
+[Kirjautuminen](http://ooppa.fi:8181/login) (k채ytt채j채: admin@ooppa.fi salasana: admin)
 
-### Demot (P채ivitetty 18.9 16:50)
-
-[Kaikki tarvittavat demot](http://ooppa.fi:8181/)
+Linkkien lis채ys, muokkaus ja poisto toimii.
