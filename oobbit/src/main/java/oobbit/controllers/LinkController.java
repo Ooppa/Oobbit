@@ -103,7 +103,7 @@ public class LinkController {
             return "linkedit"; // check for errors
         }
         
-        //link.setId(linkId);
+        link.setId(linkId); // Doesn't work without this, TODO
         
         links.update(link);
         
