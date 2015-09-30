@@ -38,7 +38,7 @@ public class Links extends BasicORM {
             return rs.getInt(1);
         }
 
-        return -1;
+        return -1; // failed
     }
 
     public int update(Link link) throws SQLException {
