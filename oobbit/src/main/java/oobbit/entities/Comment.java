@@ -18,11 +18,12 @@ public class Comment implements Result {
 
     private int id;
     private int linkId;
-    private int creator;
-    
-    @Size(min=2, max=5000)
+    private int creatorId;
+    private User creator;
+
+    @Size(min = 2, max = 5000)
     private String content;
-    
+
     private Date createTime;
 
     public Comment() {
@@ -44,11 +45,19 @@ public class Comment implements Result {
         this.linkId = linkId;
     }
 
-    public int getCreator() {
+    public int getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 
@@ -92,9 +101,9 @@ public class Comment implements Result {
 
     @Override
     public void parse(ResultSet set) throws SQLException {
-        this.id = set.getInt("id");
+        this.id = set.getInt("comment_id");
         this.linkId = set.getInt("link_id");
-        this.creator = set.getInt("creator");
+        this.creatorId = set.getInt("creator");
         this.content = set.getString("content");
         this.createTime = set.getTimestamp("create_time");
     }

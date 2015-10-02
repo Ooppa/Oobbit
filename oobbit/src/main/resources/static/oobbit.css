@@ -113,3 +113,6 @@ body {
 .comment-list .comment-post {
   margin-top: 6px;
 }
+.comment-full-witdh {
+    width: 100%;
+}

@@ -79,62 +79,49 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Comments [NOT IMPLEMENTED]
+                                Comments
                             </div>
                             <div class="panel-body">
-                                <div class="row">
+
+                                <div class="row" th:if="${#lists.isEmpty(comments)}">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body text-center">
+                                                <span class="text-muted">Nobody has commented this link yet. Be first to comment!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" th:each="comment : ${comments}">
                                     <div class="col-md-2 col-sm-2 hidden-xs">
                                         <figure class="thumbnail">
-                                            <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                                            <figcaption class="text-center">Offline</figcaption>
+                                            <img class="img-responsive" th:attr="src=@{/avatar.jpg}" />
+                                            <figcaption class="text-center" th:text="${comment.creator.username}">username</figcaption>
                                         </figure>
                                     </div>
                                     <div class="col-md-10 col-sm-10">
-                                        <div class="panel panel-default arrow left">
+                                        <div class="panel panel-default arrow right comment-full-witdh">
                                             <div class="panel-body">
                                                 <header class="text-left">
-                                                    <div class="comment-user"><i class="fa fa-user"></i> Catlover69</div>
-                                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Today, 15:48</time>
+                                                    <div class="comment-user"><i class="fa fa-user"></i> <a th:href="@{/user/{userId}/(userId=${comment.creator.id})}" th:text="${comment.creator.username}"></a></div>
+                                                    <time class="comment-date" th:attr="datetime=${comment.createTime}"><i class="fa fa-clock-o"></i> <span th:text="${comment.createTime}"></span></time>
                                                 </header>
                                                 <div class="comment-post">
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                    </p>
+                                                    <p th:text="${comment.content}"></p>
                                                 </div>
                                                 <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2 col-sm-2 hidden-xs">
-                                        <figure class="thumbnail">
-                                            <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                                            <figcaption class="text-center">Online</figcaption>
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-10 col-sm-10">
-                                        <div class="panel panel-default arrow left">
-                                            <div class="panel-body">
-                                                <header class="text-left">
-                                                    <div class="comment-user"><i class="fa fa-user"></i> HeroCoderXXX</div>
-                                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Today, 15:32</time>
-                                                </header>
-                                                <div class="comment-post">
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                                    </p>
-                                                </div>
-                                                <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form role="form" action="/">
+
+                                <form role="form" action="#" method="POST">
                                     <div class="form-group">
                                         <label>Post a comment:</label>
-                                        <textarea class="form-control" rows="5" maxlength="1000"></textarea>
+                                        <textarea class="form-control" rows="5" maxlength="1000" name="content"></textarea>
                                     </div>
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <button type="submit" class="btn btn-success pull-right">Send!</button>
                                 </form>
                             </div>

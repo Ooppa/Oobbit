@@ -21,7 +21,7 @@ public class IndexController {
     public String frontPage(Model model) {
         return "front";
     }
-    
+
     @RequestMapping("/changelog")
     public String changeLog(Model model) {
         return "changes";

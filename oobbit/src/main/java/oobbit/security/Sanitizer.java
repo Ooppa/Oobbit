@@ -6,6 +6,7 @@
 package oobbit.security;
 
 import java.sql.SQLException;
+import oobbit.entities.Comment;
 import oobbit.entities.Link;
 import oobbit.entities.Verifier;
 import oobbit.orm.exceptions.NotValidObjectException;
@@ -31,6 +32,12 @@ public class Sanitizer {
         }
 
         return link;
+    }
+    
+    public Comment sanitize(Comment comment) {
+        comment.setContent(sanitizer.sanitizeNormal(comment.getContent()));
+        
+        return comment;
     }
     
     

@@ -6,6 +6,7 @@
 package oobbit.controllers;
 
 import java.sql.SQLException;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import oobbit.orm.Users;
 import oobbit.orm.exceptions.NotLoggedInException;
@@ -15,6 +16,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -39,7 +41,8 @@ public class UserController {
     }
     
     @RequestMapping("/login")
-    public String login(Model model) {
+    public String login(Model model, @RequestParam(required = false) Map<String, String> params) {
+        model.addAttribute("haserror", params.containsKey("error"));
         return "login";
     }
     

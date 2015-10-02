@@ -8,9 +8,13 @@ package oobbit.controllers;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import oobbit.entities.Category;
+import oobbit.entities.Comment;
 import oobbit.entities.Link;
 import oobbit.orm.Categories;
+import oobbit.orm.Comments;
 import oobbit.orm.Links;
+import oobbit.orm.Users;
+import oobbit.orm.exceptions.NotLoggedInException;
 import oobbit.orm.exceptions.NotValidObjectException;
 import oobbit.orm.exceptions.NothingWasFoundException;
 import oobbit.security.Sanitizer;
@@ -37,9 +41,16 @@ public class LinkController {
     private Links links;
 
     @Autowired
+    private Users users;
+
+    @Autowired
+    private Comments comments;
+
+    @Autowired
     private Categories categories;
 
     private final int DEFAULT_AMOUNT_OF_LINKS = 25;
+    private final int DEFAULT_AMOUNT_OF_COMMENTS = 1000;
 
     @RequestMapping("/all/recent")
     public String list(Model model) throws SQLException {
@@ -57,7 +68,9 @@ public class LinkController {
 
     @RequestMapping("/view/{id}")
     public String view(@PathVariable int id, Model model) throws SQLException, NothingWasFoundException {
-        model.addAttribute("link", links.getOne(id));
+        Link link = links.getOne(id);
+        model.addAttribute("link", link);
+        model.addAttribute("comments", comments.getAllForLinkWithUser(link.getId(), DEFAULT_AMOUNT_OF_COMMENTS));
         return "linkview";
     }
 
@@ -75,16 +88,17 @@ public class LinkController {
     @RequestMapping(
             value = "{category}/add",
             method = RequestMethod.POST)
-    public String doAdd(@Valid Link link, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException {
+    public String doAdd(@Valid Link link, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException, NotLoggedInException {
         if(bindingResult.hasErrors()) {
             return "linkadd"; // check for errors
         }
-        
-        link.setCreatorId(22); // TODO
+
+        link.setCreatorId(users.getCurrentUser().getId());
+
         int addedId = links.add(sanitizer.sanitizeAndVerify(link));
         return "redirect:/view/"+addedId; // redirect to created link
     }
-    
+
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
             value = "/edit/link/{linkId}",
@@ -93,7 +107,7 @@ public class LinkController {
         model.addAttribute("link", links.getOne(linkId));
         return "linkedit";
     }
-    
+
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
             value = "/edit/link/{linkId}",
@@ -102,14 +116,14 @@ public class LinkController {
         if(bindingResult.hasErrors()) {
             return "linkedit"; // check for errors
         }
-        
+
         link.setId(linkId); // Doesn't work without this, TODO
-        
+
         links.update(link);
-        
+
         return "redirect:/view/"+link.getId(); // redirect to edited link
     }
-    
+
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
             value = "/remove/link/{linkId}",
@@ -117,7 +131,25 @@ public class LinkController {
     public String deRemove(@PathVariable int linkId, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException {
         String category = links.getOne(linkId).getCategory();
         links.remove(linkId);
+
+        return "redirect:/"+category+"/recent"; // redirect to category in which the link was previously
+    }
+
+    @Secured({"ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
+    @RequestMapping(
+            value = "/view/{id}",
+            method = RequestMethod.POST)
+    public String addComment(@Valid Comment comment, @PathVariable int id, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotLoggedInException {
+        if(bindingResult.hasErrors()) {
+            return "redirect:/view/"+id;
+        }
         
-        return "redirect:/"+ category +"/recent"; // redirect to category in which the link was previously
+        comment.setLinkId(id);
+        comment.setCreatorId(users.getCurrentUser().getId());
+        
+        sanitizer.sanitize(comment);
+        comments.add(comment);
+
+        return "redirect:/view/"+comment.getLinkId();
     }
 }

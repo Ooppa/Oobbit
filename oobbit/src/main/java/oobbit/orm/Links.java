@@ -23,6 +23,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Links extends BasicORM {
 
+    /**
+     * Add single new link.
+     *
+     * @param link
+     *
+     * @return ID of the created link
+     *
+     * @throws SQLException
+     */
     public int add(Link link) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("INSERT INTO `oobbit`.`links`(`link_id`,`title`,`content`,`link`,`category`,`creator`,`create_time`,`edit_time`) "
                 +"VALUES(NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, NULL);", Statement.RETURN_GENERATED_KEYS);
@@ -41,6 +50,15 @@ public class Links extends BasicORM {
         return -1; // failed
     }
 
+    /**
+     * Update a single link.
+     *
+     * @param link
+     *
+     * @return ID of the edited link
+     *
+     * @throws SQLException
+     */
     public int update(Link link) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("UPDATE `oobbit`.`links` SET `title` = ?, `content` = ?, `link` = ?, `edit_time` = CURRENT_TIMESTAMP WHERE `links`.`link_id` = ?;");
         statement.setString(1, link.getTitle());
@@ -109,7 +127,7 @@ public class Links extends BasicORM {
     public void remove(int linkId) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("DELETE FROM `oobbit`.`links` WHERE `links`.`link_id` = ?;");
         statement.setInt(1, linkId);
-        
+
         statement.executeUpdate();
         statement.close();
     }
