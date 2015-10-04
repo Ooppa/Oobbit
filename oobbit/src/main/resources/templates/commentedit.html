@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--
+    Aineopintojen harjoitustyö: Tietokantasovellus
+    Helsingin yliopisto Tietojenkäsittelytieteen laitos
+    Ooppa 2015 - GNU General Public License, version 3.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:include="fragments :: head"></head>
+
+    <body>
+        <div id="wrapper">
+            <div th:include="fragments :: nav"></div>
+
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Edit comment</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Edit comment with id: <strong th:text="${comment.id}"></strong>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="#" method="POST" th:object="${comment}">
+                                    <h2>Comment ID</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">#</span>
+                                        <input type="text" name="id" class="form-control" th:field="*{id}" disabled="disabled"/>
+                                    </div>
+                                    <h2>Link ID</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">#</span>
+                                        <input type="text" name="linkId" class="form-control" th:field="*{linkId}" disabled="disabled"/>
+                                    </div>
+                                    <h2>Creator ID</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">#</span>
+                                        <input type="text" name="creatorId" class="form-control" th:field="*{creatorId}" disabled="disabled"/>
+                                    </div>
+                                    <h2>Content</h2>
+                                    <div class="form-group">
+                                        <textarea name="link" class="form-control" rows="5" maxlength="4999" th:field="*{content}"></textarea>
+                                    </div>
+                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}" >error</div>
+                                    <h2>Create time</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" name="createTime" class="form-control" th:field="*{createTime}" disabled="disabled"/>
+                                    </div>
+                                    <hr />
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-lg btn-primary">Edit!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:include="fragments :: scripts" th:remove="tag"></div>
+    </body>
+
+</html>

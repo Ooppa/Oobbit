@@ -10,10 +10,7 @@ import javax.validation.Valid;
 import oobbit.entities.Category;
 import oobbit.entities.Comment;
 import oobbit.entities.Link;
-import oobbit.orm.Categories;
-import oobbit.orm.Comments;
-import oobbit.orm.Links;
-import oobbit.orm.Users;
+import oobbit.orm.*;
 import oobbit.orm.exceptions.NotLoggedInException;
 import oobbit.orm.exceptions.NotValidObjectException;
 import oobbit.orm.exceptions.NothingWasFoundException;
@@ -49,6 +46,9 @@ public class LinkController {
     @Autowired
     private Categories categories;
 
+    @Autowired
+    private LinkConnections linkConnections;
+
     private final int DEFAULT_AMOUNT_OF_LINKS = 25;
     private final int DEFAULT_AMOUNT_OF_COMMENTS = 1000;
 
@@ -60,17 +60,26 @@ public class LinkController {
     }
 
     @RequestMapping("/{category}/recent")
-    public String listCategory(@PathVariable String category, Model model) throws SQLException, NothingWasFoundException {
+    public String listCategory(
+            @PathVariable String category,
+            Model model
+    ) throws SQLException, NothingWasFoundException {
         model.addAttribute("links", links.getAll(DEFAULT_AMOUNT_OF_LINKS, category));
         model.addAttribute("category", categories.getOne(category));
         return "linklist";
     }
 
     @RequestMapping("/view/{id}")
-    public String view(@PathVariable int id, Model model) throws SQLException, NothingWasFoundException {
+    public String view(
+            @PathVariable int id,
+            @Valid Comment comment,
+            BindingResult bindingResult,
+            Model model
+    ) throws SQLException, NothingWasFoundException {
         Link link = links.getOne(id);
         model.addAttribute("link", link);
         model.addAttribute("comments", comments.getAllForLinkWithUser(link.getId(), DEFAULT_AMOUNT_OF_COMMENTS));
+        model.addAttribute("connections", linkConnections.getAll(id));
         return "linkview";
     }
 
@@ -78,7 +87,10 @@ public class LinkController {
     @RequestMapping(
             value = "{category}/add",
             method = RequestMethod.GET)
-    public String add(@PathVariable String category, Model model) throws SQLException, NothingWasFoundException {
+    public String add(
+            @PathVariable String category,
+            Model model
+    ) throws SQLException, NothingWasFoundException {
         model.addAttribute("category", categories.getOne(category));
         model.addAttribute("link", new Link()); // new empty link
         return "linkadd";
@@ -88,7 +100,11 @@ public class LinkController {
     @RequestMapping(
             value = "{category}/add",
             method = RequestMethod.POST)
-    public String doAdd(@Valid Link link, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException, NotLoggedInException {
+    public String doAdd(
+            @Valid Link link,
+            BindingResult bindingResult,
+            Model model
+    ) throws SQLException, NothingWasFoundException, NotValidObjectException, NotLoggedInException {
         if(bindingResult.hasErrors()) {
             return "linkadd"; // check for errors
         }
@@ -103,7 +119,10 @@ public class LinkController {
     @RequestMapping(
             value = "/edit/link/{linkId}",
             method = RequestMethod.GET)
-    public String edit(@PathVariable int linkId, Model model) throws SQLException, NothingWasFoundException {
+    public String edit(
+            @PathVariable int linkId,
+            Model model
+    ) throws SQLException, NothingWasFoundException {
         model.addAttribute("link", links.getOne(linkId));
         return "linkedit";
     }
@@ -112,7 +131,12 @@ public class LinkController {
     @RequestMapping(
             value = "/edit/link/{linkId}",
             method = RequestMethod.POST)
-    public String doEdit(@PathVariable int linkId, @Valid Link link, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException {
+    public String doEdit(
+            @PathVariable int linkId,
+            @Valid Link link,
+            BindingResult bindingResult,
+            Model model
+    ) throws SQLException, NothingWasFoundException, NotValidObjectException {
         if(bindingResult.hasErrors()) {
             return "linkedit"; // check for errors
         }
@@ -128,7 +152,10 @@ public class LinkController {
     @RequestMapping(
             value = "/remove/link/{linkId}",
             method = RequestMethod.POST)
-    public String deRemove(@PathVariable int linkId, Model model) throws SQLException, NothingWasFoundException, NotValidObjectException {
+    public String deRemove(
+            @PathVariable int linkId,
+            Model model
+    ) throws SQLException, NothingWasFoundException, NotValidObjectException {
         String category = links.getOne(linkId).getCategory();
         links.remove(linkId);
 
@@ -139,14 +166,23 @@ public class LinkController {
     @RequestMapping(
             value = "/view/{id}",
             method = RequestMethod.POST)
-    public String addComment(@Valid Comment comment, @PathVariable int id, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException, NotLoggedInException {
+    public String addComment(
+            @PathVariable int id,
+            @Valid Comment comment,
+            BindingResult bindingResult,
+            Model model
+    ) throws SQLException, NothingWasFoundException, NotLoggedInException {
         if(bindingResult.hasErrors()) {
-            return "redirect:/view/"+id;
+            Link link = links.getOne(id);
+            model.addAttribute("link", link);
+            model.addAttribute("comments", comments.getAllForLinkWithUser(link.getId(), DEFAULT_AMOUNT_OF_COMMENTS));
+            model.addAttribute("connections", linkConnections.getAll(id));
+            return "linkview";
         }
-        
+
         comment.setLinkId(id);
         comment.setCreatorId(users.getCurrentUser().getId());
-        
+
         sanitizer.sanitize(comment);
         comments.add(comment);
 

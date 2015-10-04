@@ -8,6 +8,7 @@ package oobbit.entities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -17,7 +18,10 @@ public class LinkConnection implements Result {
 
     private int sourceLinkId;
     private int destinationLinkId;
+    
+    @Size(min=2, max=50)
     private String title;
+    
     private int creator;
     private Date createTime;
     private Date editTime;

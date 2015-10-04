@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class UserController {
-    
+
     @Autowired
     private Users users;
-    
+
     @Secured({"ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping("/me")
     public String me(Model model) throws NothingWasFoundException, SQLException {
@@ -36,18 +36,24 @@ public class UserController {
         } catch(NotLoggedInException ex) {
             return "redirect:/login"; // Force login, TODO
         }
-        
+
         return "me";
     }
-    
+
     @RequestMapping("/login")
-    public String login(Model model, @RequestParam(required = false) Map<String, String> params) {
+    public String login(
+            Model model,
+            @RequestParam(required = false) Map<String, String> params
+    ) {
         model.addAttribute("haserror", params.containsKey("error"));
         return "login";
     }
-    
+
     @RequestMapping("/logout")
-    public String logout(HttpSession session, Model model) {
+    public String logout(
+            HttpSession session,
+            Model model
+    ) {
         session.invalidate(); // Clear session
         return "redirect:/login";
     }

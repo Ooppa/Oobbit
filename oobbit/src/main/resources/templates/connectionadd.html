@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--
+    Aineopintojen harjoitustyö: Tietokantasovellus
+    Helsingin yliopisto Tietojenkäsittelytieteen laitos
+    Ooppa 2015 - GNU General Public License, version 3.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:include="fragments :: head"></head>
+
+    <body>
+        <div id="wrapper">
+            <div th:include="fragments :: nav"></div>
+
+            <div id="page-wrapper">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Add new connection</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Add a new connection to link:
+                            </div>
+                            <div class="panel-body">
+                                <form role="form" action="#" method="POST" th:object="${connection}">
+                                    <h2>Connection</h2>
+                                    <div class="form-group input-group">
+                                        <input type="text" name="sourceLinkId" class="form-control" disabled="disabled" th:field="*{sourceLinkId}" />
+                                        <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
+                                        <input type="text" name="destinationLinkId" class="form-control" placeholder="Destination link id" th:field="*{destinationLinkId}" />
+                                    </div>
+                                    <h2>Title</h2>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><i class="fa fa-header"></i></span>
+                                        <input type="text" name="title" class="form-control" placeholder="Title for the connection" th:field="*{title}" />
+                                    </div>
+                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" >error</div>
+                                    <hr />
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-lg btn-success">Confirm!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div th:include="fragments :: scripts" th:remove="tag"></div>
+    </body>
+
+</html>
