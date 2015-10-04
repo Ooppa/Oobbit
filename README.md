@@ -8,12 +8,12 @@ Oobbit on Redditin kaltainen sosiaalisen media, joka painottaa käyttäjien lis�
 
 [Dokumentaatio](/docs/dokumentaatio.pdf) (PDF)
 
-### Demot (Päivitetty 27.9 15:00)
+### Demot (Päivitetty 04.10 18:00)
 
 [Etusivu](http://ooppa.fi:8181/)
 
 [Kirjautuminen](http://ooppa.fi:8181/login) (käyttäjä: admin@ooppa.fi salasana: admin)
 
-Linkkien lisäys, muokkaus ja poisto toimii.
+**Uutta** Kommentteja voi nyt lisätä, muokata ja poistaa. Yhteyksiä voi lisätä.
 
-[Muokkaus ja poisto](http://ooppa.fi:8181/view/1) Sininen ja punainen pieni nappi paneelin alareunassa.
+[Kommentit ja yhteydet](http://ooppa.fi:8181/view/5) Sininen ja punainen pieni nappi kommentin alareunassa. Vihreä send nappi sekä vihreä add new connection nappi.
