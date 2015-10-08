@@ -6,8 +6,6 @@
 package oobbit.security;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oobbit.entities.User;
@@ -18,10 +16,10 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 /**
+ * Handles authentication in the application.
  *
  * @author Ooppa
  */
@@ -41,24 +39,24 @@ public class JpaAuthenticationProvider implements AuthenticationProvider {
 
         try {
             User user = users.attemptLogin(username, password);
-
-            List<GrantedAuthority> grantedAuths = new ArrayList<>();
-            grantedAuths.add(accessLevelToGrantedAuthority.accessLevelToSimpleGrantedAuthority(user.getAccessLevel()));
-
-            return new UsernamePasswordAuthenticationToken(user.getUsername(), password, grantedAuths);
-            
+            return new UsernamePasswordAuthenticationToken(
+                    user.getUsername(),
+                    password,
+                    accessLevelToGrantedAuthority.accessLevelToSimpleGrantedAuthorityList(user.getAccessLevel())
+            );
         } catch(SQLException ex) {
-            Logger.getLogger(JpaAuthenticationProvider.class.getName()).log(Level.SEVERE, "SQLException was thrown", ex);
+            Logger.getLogger(JpaAuthenticationProvider.class.getName()).log(Level.SEVERE, "SQLException was thrown while authenticating a user in JpaAuthenticationProvider.", ex);
         } catch(FailedLoginException ex) {
-            Logger.getLogger(JpaAuthenticationProvider.class.getName()).log(Level.SEVERE, "FailedLoginException was thrown", ex);
+            Logger.getLogger(JpaAuthenticationProvider.class.getName()).log(Level.SEVERE, "FailedLoginException was thrown while tyring to authenticate a user.", ex);
         }
-        
-        throw new AuthenticationException("Unable to authenticate user "+username) {};
+
+        throw new AuthenticationException("Unable to authenticate user "+username) {
+        };
     }
 
     @Override
     public boolean supports(Class<?> type) {
-        return true; // Supports everything, TODO?
+        return true;
     }
 
 }

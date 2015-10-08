@@ -58,7 +58,7 @@ Ooppa 2015 - GNU General Public License, version 3.
                             <li>
                                 <a href="/"><i class="fa fa-home fa-fw"></i> Frontpage</a>
                             </li>
-                            <li sec:authorize="hasRole('ROLE_ADMINISTRATOR')">
+                            <li th:if="${#lists.contains(roles, 'ROLE_USER')}">
                                 <a href="#"><i class="fa fa-plus fa-fw"></i> Add a link <span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -94,12 +94,17 @@ Ooppa 2015 - GNU General Public License, version 3.
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-user fa-fw"></i> User<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level" th:if="${#lists.contains(roles, 'ROLE_USER')}">
                                     <li>
                                         <a th:href="@{/me}"><i class="fa fa-file-text-o fa-fw"></i> About me</a>
                                     </li>
                                     <li class="c-video">
                                         <a th:href="@{/logout}"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-second-level" th:if="${#lists.contains(roles, 'ROLE_ANONYMOUS')}">
+                                    <li>
+                                        <a th:href="@{/login}"><i class="fa fa-sign-in fa-fw"></i> Sign in!</a>
                                     </li>
                                 </ul>
                             </li>

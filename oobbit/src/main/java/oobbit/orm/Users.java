@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import oobbit.database.DatabaseSettings;
 import oobbit.entities.User;
@@ -16,6 +17,7 @@ import oobbit.orm.exceptions.FailedLoginException;
 import oobbit.orm.exceptions.NotLoggedInException;
 import oobbit.orm.exceptions.NothingWasFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +39,17 @@ public class Users extends BasicORM {
         }
         
         return this.get((String) auth.getPrincipal());
+    }
+
+    public ArrayList<String> getCurrentUserRoles() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ArrayList<String> asStrings = new ArrayList<>();
+         
+         for(GrantedAuthority authority : auth.getAuthorities()) {
+            asStrings.add(authority.getAuthority());
+        }
+        
+        return asStrings;
     }
 
     public User attemptLogin(String email, String password) throws SQLException, FailedLoginException {

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 import oobbit.entities.Comment;
 import oobbit.orm.Comments;
+import oobbit.orm.Users;
 import oobbit.orm.exceptions.NothingWasFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -30,6 +31,9 @@ public class CommentController {
     @Autowired
     private Comments comments;
     
+    @Autowired
+    private Users users;
+    
     // Adding comments is in the LinkController
     
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
@@ -40,7 +44,7 @@ public class CommentController {
         Comment comment = comments.getOne(id);
         
         model.addAttribute("comment", comment);
-        
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "commentedit";
     }
     
@@ -50,6 +54,7 @@ public class CommentController {
             method = RequestMethod.POST)
     public String doEditComment(@PathVariable int id, @Valid Comment comment, BindingResult bindingResult, Model model) throws SQLException, NothingWasFoundException {
         if(bindingResult.hasErrors()){
+            model.addAttribute("roles", users.getCurrentUserRoles());
             return "commentedit";
         }
         

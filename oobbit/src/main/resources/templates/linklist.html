@@ -20,10 +20,14 @@
                         <h1 class="page-header" th:text="${category.title}">Category title</h1>
                     </div>
                 </div>
+                
+                <div class="list-group-item text-muted" th:if="${#lists.isEmpty(links)}">
+                    There is no links in this category.
+                </div>
 
                 <div th:each="link : ${links}" class="row well link-list">
                     <div class="col-md-2">
-                        <span th:text="${link.createTime}" class="label label-success">timestamp</span>
+                        <span th:text="${#dates.format(link.createTime)}" class="label label-success">timestamp</span>
                     </div>
                     <div class="col-md-8">
                         <a th:text="${link.title}" th:href="@{/view/{linkId}/(linkId=${link.id})}" class="link-title">title</a>

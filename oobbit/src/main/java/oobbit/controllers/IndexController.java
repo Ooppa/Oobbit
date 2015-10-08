@@ -5,6 +5,8 @@
  */
 package oobbit.controllers;
 
+import oobbit.orm.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class IndexController {
+    
+    @Autowired
+    private Users users;
 
     @RequestMapping("/")
     public String frontPage(Model model) {
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "front";
     }
 
     @RequestMapping("/changelog")
     public String changeLog(Model model) {
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "changes";
     }
 

@@ -33,10 +33,13 @@ public class UserController {
     public String me(Model model) throws NothingWasFoundException, SQLException {
         try {
             model.addAttribute("user", users.getCurrentUser());
+            model.addAttribute("roles", users.getCurrentUserRoles());
         } catch(NotLoggedInException ex) {
             return "redirect:/login"; // Force login, TODO
+        } finally {
+            model.addAttribute("roles", users.getCurrentUserRoles());
         }
-
+        
         return "me";
     }
 
@@ -46,6 +49,7 @@ public class UserController {
             @RequestParam(required = false) Map<String, String> params
     ) {
         model.addAttribute("haserror", params.containsKey("error"));
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "login";
     }
 

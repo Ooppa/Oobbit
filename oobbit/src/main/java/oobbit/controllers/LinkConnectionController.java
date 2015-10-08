@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 import oobbit.entities.LinkConnection;
 import oobbit.orm.LinkConnections;
+import oobbit.orm.Users;
 import oobbit.orm.exceptions.NotValidLinkConnectionException;
 import oobbit.orm.exceptions.NothingWasFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class LinkConnectionController {
 
     @Autowired
     private LinkConnections connections;
+    
+    @Autowired
+    private Users users;
 
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
@@ -42,7 +46,7 @@ public class LinkConnectionController {
         LinkConnection connection = new LinkConnection();
         connection.setSourceLinkId(sourceId);
         model.addAttribute("connection", connection);
-
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "connectionadd";
     }
 
@@ -58,10 +62,10 @@ public class LinkConnectionController {
     ) throws SQLException, NothingWasFoundException, NotValidLinkConnectionException {
         connection.setSourceLinkId(sourceId);
         if(bindingResult.hasErrors()) {
+            model.addAttribute("roles", users.getCurrentUserRoles());
             return "connectionadd";
         }
 
-        
         connections.add(connection);
 
         return "redirect:/view/"+sourceId;
@@ -79,7 +83,7 @@ public class LinkConnectionController {
         LinkConnection connection = connections.getOne(sourceId, destinationId);
 
         model.addAttribute("connection", connection);
-
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "connectionedit";
     }
 
@@ -95,6 +99,7 @@ public class LinkConnectionController {
             Model model
     ) throws SQLException, NothingWasFoundException {
         if(bindingResult.hasErrors()) {
+            model.addAttribute("roles", users.getCurrentUserRoles());
             return "commentedit";
         }
 

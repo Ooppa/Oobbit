@@ -56,6 +56,7 @@ public class LinkController {
     public String list(Model model) throws SQLException {
         model.addAttribute("category", new Category("all", "All", "All categories"));
         model.addAttribute("links", links.getAll(DEFAULT_AMOUNT_OF_LINKS));
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "linklist";
     }
 
@@ -66,6 +67,7 @@ public class LinkController {
     ) throws SQLException, NothingWasFoundException {
         model.addAttribute("links", links.getAll(DEFAULT_AMOUNT_OF_LINKS, category));
         model.addAttribute("category", categories.getOne(category));
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "linklist";
     }
 
@@ -80,6 +82,7 @@ public class LinkController {
         model.addAttribute("link", link);
         model.addAttribute("comments", comments.getAllForLinkWithUser(link.getId(), DEFAULT_AMOUNT_OF_COMMENTS));
         model.addAttribute("connections", linkConnections.getAll(id));
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "linkview";
     }
 
@@ -93,6 +96,7 @@ public class LinkController {
     ) throws SQLException, NothingWasFoundException {
         model.addAttribute("category", categories.getOne(category));
         model.addAttribute("link", new Link()); // new empty link
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "linkadd";
     }
 
@@ -101,11 +105,14 @@ public class LinkController {
             value = "{category}/add",
             method = RequestMethod.POST)
     public String doAdd(
+            @PathVariable String category,
             @Valid Link link,
             BindingResult bindingResult,
             Model model
     ) throws SQLException, NothingWasFoundException, NotValidObjectException, NotLoggedInException {
         if(bindingResult.hasErrors()) {
+            model.addAttribute("roles", users.getCurrentUserRoles());
+            model.addAttribute("category", categories.getOne(category));
             return "linkadd"; // check for errors
         }
 
@@ -124,6 +131,7 @@ public class LinkController {
             Model model
     ) throws SQLException, NothingWasFoundException {
         model.addAttribute("link", links.getOne(linkId));
+        model.addAttribute("roles", users.getCurrentUserRoles());
         return "linkedit";
     }
 
@@ -138,6 +146,7 @@ public class LinkController {
             Model model
     ) throws SQLException, NothingWasFoundException, NotValidObjectException {
         if(bindingResult.hasErrors()) {
+            model.addAttribute("roles", users.getCurrentUserRoles());
             return "linkedit"; // check for errors
         }
 
@@ -177,6 +186,7 @@ public class LinkController {
             model.addAttribute("link", link);
             model.addAttribute("comments", comments.getAllForLinkWithUser(link.getId(), DEFAULT_AMOUNT_OF_COMMENTS));
             model.addAttribute("connections", linkConnections.getAll(id));
+            model.addAttribute("roles", users.getCurrentUserRoles());
             return "linkview";
         }
 

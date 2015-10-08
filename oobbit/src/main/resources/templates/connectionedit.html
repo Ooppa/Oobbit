@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Add new link</h1>
+                        <h1 class="page-header">Add new connection</h1>
                     </div>
                 </div>
 
@@ -25,27 +25,23 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Add a new link to category <strong th:text="${category.title}">Videos</strong>
+                                Add a new connection to link:
                             </div>
                             <div class="panel-body">
-                                <form role="form" action="#" method="POST" th:object="${link}">
-                                    <h2>Link</h2>
+                                <form role="form" action="#" method="POST" th:object="${connection}">
+                                    <h2>Connection</h2>
+                                    <p>You can add a connection between two links by filling in the <strong>ID</strong> of the post you want to connect to below.</p>
                                     <div class="form-group input-group">
-                                        <span class="input-group-addon"><i class="fa fa-link"></i></span>
-                                        <input type="text" name="link" class="form-control" placeholder="https://www.example.com" th:field="*{url}" />
+                                        <input type="text" name="sourceLinkId" class="form-control" disabled="disabled" th:field="*{sourceLinkId}" />
+                                        <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
+                                        <input type="text" name="destinationLinkId" class="form-control" placeholder="Destination link id" th:field="*{destinationLinkId}" />
                                     </div>
-                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('url')}" th:errors="*{url}" >error</div>
                                     <h2>Title</h2>
                                     <div class="form-group input-group">
                                         <span class="input-group-addon"><i class="fa fa-header"></i></span>
-                                        <input type="text" name="title" class="form-control" placeholder="Title for the link" th:field="*{title}" />
+                                        <input type="text" name="title" class="form-control" placeholder="Title for the connection" th:field="*{title}" />
                                     </div>
                                     <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" >error</div>
-                                    <h2>Content</h2>
-                                    <div class="form-group">
-                                        <textarea name="content" class="form-control" rows="5" maxlength="10000" th:field="*{content}"></textarea>
-                                    </div>
-                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}" >error</div>
                                     <hr />
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <button type="submit" class="btn btn-lg btn-success">Confirm!</button>

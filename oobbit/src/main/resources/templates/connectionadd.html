@@ -30,6 +30,7 @@
                             <div class="panel-body">
                                 <form role="form" action="#" method="POST" th:object="${connection}">
                                     <h2>Connection</h2>
+                                    <p>You can add a connection between two links by filling in the <strong>ID</strong> of the post you want to connect to below.</p>
                                     <div class="form-group input-group">
                                         <input type="text" name="sourceLinkId" class="form-control" disabled="disabled" th:field="*{sourceLinkId}" />
                                         <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
