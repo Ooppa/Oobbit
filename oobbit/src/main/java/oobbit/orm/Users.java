@@ -27,28 +27,28 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Users extends BasicORM {
-    
+
     @Resource(name = "DatabaseSettings")
     private DatabaseSettings settings;
-    
+
     public User getCurrentUser() throws SQLException, NothingWasFoundException, NotLoggedInException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if(auth.getPrincipal().equals("anonymousUser")) {
             throw new NotLoggedInException("You are not logged in.");
         }
-        
+
         return this.get((String) auth.getPrincipal());
     }
 
     public ArrayList<String> getCurrentUserRoles() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ArrayList<String> asStrings = new ArrayList<>();
-         
-         for(GrantedAuthority authority : auth.getAuthorities()) {
+
+        for(GrantedAuthority authority : auth.getAuthorities()) {
             asStrings.add(authority.getAuthority());
         }
-        
+
         return asStrings;
     }
 
@@ -56,9 +56,9 @@ public class Users extends BasicORM {
         PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM `users` WHERE `email` = ? AND `password` = ?;");
         statement.setString(1, email);
         statement.setString(2, hash(password));
-        
+
         ResultSet query = statement.executeQuery();
-        
+
         if(query.next()) {
             User user = new User();
             user.parse(query);
@@ -67,20 +67,20 @@ public class Users extends BasicORM {
 
         throw new FailedLoginException();
     }
-    
+
     public User get(String username) throws SQLException, NothingWasFoundException {
         PreparedStatement statement = getConnection().prepareStatement("SELECT user_id, username, email, access_level, create_time FROM oobbit.users WHERE username = ?;");
         statement.setString(1, username);
 
         ResultSet query = statement.executeQuery();
-        
+
         if(query.next()) {
             User user = new User();
             user.parse(query);
             return user;
         }
-        
-        throw new NothingWasFoundException("No user found with that username: "+ username);
+
+        throw new NothingWasFoundException("No user found with that username: "+username);
     }
 
     public User get(int id) throws SQLException, NothingWasFoundException {
@@ -88,13 +88,13 @@ public class Users extends BasicORM {
         statement.setInt(1, id);
 
         ResultSet query = statement.executeQuery();
-        
+
         if(query.next()) {
             User user = new User();
             user.parse(query);
             return user;
         }
-        
+
         throw new NothingWasFoundException("No user found with that id.");
     }
 
@@ -102,10 +102,10 @@ public class Users extends BasicORM {
      * Creates a user and returns its id.
      *
      * @param username Username for the user
-     * @param email Email for the user
+     * @param email    Email for the user
      * @param password Hashed password
      *
-     * @return
+     * @return ID of the registered user
      *
      * @throws SQLException
      */
@@ -123,8 +123,9 @@ public class Users extends BasicORM {
 
         throw new SQLException("Could not add user!");
     }
-    
+
     private String hash(String password) {
+        // Apply your hashing here, you should never store plaintext passwords in your database.
         return password;
     }
 
