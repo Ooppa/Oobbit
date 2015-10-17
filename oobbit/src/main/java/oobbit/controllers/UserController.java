@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,17 +31,19 @@ public class UserController {
 
     @Secured({"ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping("/me")
-    public String me(Model model) throws NothingWasFoundException, SQLException {
-        try {
-            model.addAttribute("user", users.getCurrentUser());
-            model.addAttribute("roles", users.getCurrentUserRoles());
-        } catch(NotLoggedInException ex) {
-            return "redirect:/login"; // Force login, TODO
-        } finally {
-            model.addAttribute("roles", users.getCurrentUserRoles());
-        }
-        
+    public String me(Model model) throws NothingWasFoundException, SQLException, NotLoggedInException {
+        model.addAttribute("user", users.getCurrentUser());
+        model.addAttribute("roles", users.getCurrentUserRoles());
+
         return "me";
+    }
+
+    @RequestMapping("/users/{id}")
+    public String whois(@PathVariable int id, Model model) throws NothingWasFoundException, SQLException {
+        model.addAttribute("user", users.get(id));
+        model.addAttribute("roles", users.getCurrentUserRoles());
+        
+        return "whois";
     }
 
     @RequestMapping("/login")

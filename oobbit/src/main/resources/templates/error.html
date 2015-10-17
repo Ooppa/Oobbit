@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<!--
+    Aineopintojen harjoitustyö: Tietokantasovellus
+    Helsingin yliopisto Tietojenkäsittelytieteen laitos
+    Ooppa 2015 - GNU General Public License, version 3.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:include="fragments :: head"></head>
+
+    <body>
+        <div id="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="jumbotron">
+                            <h1 class="link-nounderline">
+                                <a th:href="@{/}" class="">
+                                    <span class="logo-green">Oob</span><span class="logo-orange">bit</span>
+                                </a>
+                            </h1>
+                            <p>Explore the web!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel panel-red">
+                            <div class="panel-heading text-center">
+                                <h3 class="panel-title"><strong>Ooops! Error occurred.</strong></h3>
+                            </div>
+                            <div class="panel-body text-center">
+                                <h3>
+                                    <span th:text="${error.status}"></span> -
+                                    <span th:text="${error.error}"></span>
+                                </h3>
+                                <p th:text="${error.message}"></p>
+                                <div>
+                                     <a th:href="@{/}" class="btn btn-default btn-sm pull-right" title="Back to frontpage"><i class="fa fa-arrow-left"></i> Go back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" th:if="${haserror}">
+                    <div class="login-panel-error col-md-6 col-md-offset-3">
+                        <div class="alert alert-danger">
+                            The login credentials you entered were incorrect. <strong>Please try again!</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:include="fragments :: scripts" th:remove="tag"></div>
+    </body>
+</html>

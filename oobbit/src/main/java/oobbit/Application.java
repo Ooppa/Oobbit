@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 /**
  * Starting point for the Oobbit application.
@@ -22,7 +23,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
-//@ImportResource("classpath:thymeleaf.xml") TODO
+@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class Application {
 
     public static void main(String[] args) {

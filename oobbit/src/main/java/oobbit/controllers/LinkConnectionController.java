@@ -45,6 +45,7 @@ public class LinkConnectionController {
    ) throws SQLException, NothingWasFoundException {
         LinkConnection connection = new LinkConnection();
         connection.setSourceLinkId(sourceId);
+        
         model.addAttribute("connection", connection);
         model.addAttribute("roles", users.getCurrentUserRoles());
         return "connectionadd";
@@ -60,14 +61,13 @@ public class LinkConnectionController {
             BindingResult bindingResult, 
             Model model
     ) throws SQLException, NothingWasFoundException, NotValidLinkConnectionException {
-        connection.setSourceLinkId(sourceId);
         if(bindingResult.hasErrors()) {
             model.addAttribute("roles", users.getCurrentUserRoles());
             return "connectionadd";
         }
-
+        
+        connection.setSourceLinkId(sourceId);
         connections.add(connection);
-
         return "redirect:/view/"+sourceId;
     }
 
@@ -99,6 +99,7 @@ public class LinkConnectionController {
             Model model
     ) throws SQLException, NothingWasFoundException {
         if(bindingResult.hasErrors()) {
+            model.addAttribute("connection", connection);
             model.addAttribute("roles", users.getCurrentUserRoles());
             return "commentedit";
         }

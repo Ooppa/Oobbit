@@ -84,7 +84,7 @@ public class Users extends BasicORM {
     }
 
     public User get(int id) throws SQLException, NothingWasFoundException {
-        PreparedStatement statement = getConnection().prepareStatement("SELECT user_id, username, email, access_level, create_time FROM oobbit.users WHERE id = ?;");
+        PreparedStatement statement = getConnection().prepareStatement("SELECT user_id, username, email, access_level, create_time FROM oobbit.users WHERE user_id = ?;");
         statement.setInt(1, id);
 
         ResultSet query = statement.executeQuery();

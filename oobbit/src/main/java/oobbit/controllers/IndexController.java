@@ -28,10 +28,4 @@ public class IndexController {
         return "front";
     }
 
-    @RequestMapping("/changelog")
-    public String changeLog(Model model) {
-        model.addAttribute("roles", users.getCurrentUserRoles());
-        return "changes";
-    }
-
 }

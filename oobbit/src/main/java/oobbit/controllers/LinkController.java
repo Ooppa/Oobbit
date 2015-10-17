@@ -1,6 +1,6 @@
 /*
- * Aineopintojen harjoitustyö: Tietokantasovellus
- * Helsingin yliopisto Tietojenkäsittelytieteen laitos
+ * Aineopintojen harjoitustyÃ¶: Tietokantasovellus
+ * Helsingin yliopisto TietojenkÃ¤sittelytieteen laitos
  * Ooppa 2015 - GNU General Public License, version 3.
  */
 package oobbit.controllers;
@@ -150,8 +150,7 @@ public class LinkController {
             return "linkedit"; // check for errors
         }
 
-        link.setId(linkId); // Doesn't work without this, TODO
-
+        link.setId(linkId);
         links.update(link);
 
         return "redirect:/view/"+link.getId(); // redirect to edited link
