@@ -31,7 +31,7 @@
                                 <a class="btn btn-lg btn-success" th:href="${link.url}" target="_NEW" title="Open link in new tab">Open link</a>
                             </div>
                             <div class="panel-footer">
-                                Created by <a th:href="@{/users/{userId}/(userId=${link.creator.id})}" th:text="${link.creator.username}"></a> on <i th:text="${#dates.format(link.createTime)}"></i>.
+                                Created by <a th:href="@{/user/{userId}/(userId=${link.creator.id})}" th:text="${link.creator.username}"></a> on <i th:text="${#dates.format(link.createTime)}"></i>.
                                 <strong th:if="${link.editTime}!=null" th:text="'Edited at ' + ${#dates.format(link.editTime)}"></strong>
                                 <div class="pull-right" th:if="${#lists.contains(roles, 'ROLE_MODERATOR')}">
                                     <form th:attr="action=@{/remove/link/{linkId}/(linkId=${link.id})}" method="POST">
@@ -52,10 +52,22 @@
                                         <li class="list-group-item" th:if="${#lists.isEmpty(connections)}">
                                             This link has no connections. Be first to add one!
                                         </li>
-
                                         <li class="list-group-item" th:each="connection : ${connections}">
+                                            <div class="btn-group">
+                                                <a th:href="@{/view/{linkId}/(linkId=${connection.destinationLinkId})}" type="button" class="btn btn-default"><i class="fa fa-arrow-right"></i> <span th:text="${connection.title}"></span></a>
+                                                <form th:if="${#lists.contains(roles, 'ROLE_MODERATOR')}" th:attr="action=@{/connection/{soId}/{deId}/remove(soId=${connection.sourceLinkId}, deId=${connection.destinationLinkId})}" method="POST" class="btn-group">
+                                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu">
+                                                            <a class="btn btn-primary btn-xs connection-button center-block" th:href="@{/connection/{soId}/{deId}/edit(soId=${connection.sourceLinkId}, deId=${connection.destinationLinkId})}"><i class="fa fa-pencil"></i> Edit</a>
+                                                            <hr />
+                                                            <button class="btn btn-danger btn-xs connection-button center-block" type="submit"><i class="fa fa-trash"></i> Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                             <span class="badge" th:text="${#dates.format(connection.createTime)}">timestamp</span>
-                                            <a href="#" th:href="@{/view/{linkId}/(linkId=${connection.destinationLinkId})}"><i class="fa fa-arrow-right"></i> <span th:text="${connection.title}"></span></a>
                                         </li>
                                     </ul>
                                     <div th:if="${#lists.contains(roles, 'ROLE_USER')}">

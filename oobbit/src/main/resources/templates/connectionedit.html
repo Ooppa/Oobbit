@@ -25,16 +25,16 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Add a new connection to link:
+                                Edit connection:
                             </div>
                             <div class="panel-body">
-                                <form role="form" action="#" method="POST" th:object="${connection}">
+                                <form role="form" action="#" method="POST" th:object="${linkConnection}">
                                     <h2>Connection</h2>
                                     <p>You can add a connection between two links by filling in the <strong>ID</strong> of the post you want to connect to below.</p>
                                     <div class="form-group input-group">
                                         <input type="text" name="sourceLinkId" class="form-control" disabled="disabled" th:field="*{sourceLinkId}" />
                                         <span class="input-group-addon"><i class="fa fa-arrow-right"></i></span>
-                                        <input type="text" name="destinationLinkId" class="form-control" placeholder="Destination link id" th:field="*{destinationLinkId}" />
+                                        <input type="text" name="destinationLinkId" class="form-control" disabled="disabled" placeholder="Destination link id" th:field="*{destinationLinkId}" />
                                     </div>
                                     <h2>Title</h2>
                                     <div class="form-group input-group">

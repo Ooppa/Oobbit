@@ -121,3 +121,13 @@ body {
 .link-nounderline a:hover{
     text-decoration: none;
 }
+
+.link-button {
+    background:none!important;
+    border:none; 
+    cursor:pointer;
+}
+
+.connection-button {
+    width: 70%;
+}

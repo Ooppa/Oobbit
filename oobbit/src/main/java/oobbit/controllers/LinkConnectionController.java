@@ -31,43 +31,44 @@ public class LinkConnectionController {
 
     @Autowired
     private LinkConnections connections;
-    
+
     @Autowired
     private Users users;
 
-    @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
+    @Secured({"ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
             value = "/{sourceId}/add",
             method = RequestMethod.GET)
     public String addConnection(
-            @PathVariable int sourceId, 
+            @PathVariable int sourceId,
             Model model
-   ) throws SQLException, NothingWasFoundException {
-        LinkConnection connection = new LinkConnection();
-        connection.setSourceLinkId(sourceId);
-        
-        model.addAttribute("connection", connection);
+    ) throws SQLException, NothingWasFoundException {
+        LinkConnection linkConnection = new LinkConnection();
+        linkConnection.setSourceLinkId(sourceId);
+
+        model.addAttribute("linkConnection", linkConnection);
         model.addAttribute("roles", users.getCurrentUserRoles());
         return "connectionadd";
     }
 
-    @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
+    @Secured({"ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
             value = "/{sourceId}/add",
             method = RequestMethod.POST)
     public String doAddConnection(
             @PathVariable int sourceId,
-            @Valid LinkConnection connection, 
-            BindingResult bindingResult, 
+            @Valid LinkConnection linkConnection,
+            BindingResult bindingResult,
             Model model
     ) throws SQLException, NothingWasFoundException, NotValidLinkConnectionException {
         if(bindingResult.hasErrors()) {
+            linkConnection.setSourceLinkId(sourceId);
             model.addAttribute("roles", users.getCurrentUserRoles());
             return "connectionadd";
         }
-        
-        connection.setSourceLinkId(sourceId);
-        connections.add(connection);
+
+        linkConnection.setSourceLinkId(sourceId);
+        connections.add(linkConnection);
         return "redirect:/view/"+sourceId;
     }
 
@@ -76,13 +77,13 @@ public class LinkConnectionController {
             value = "/{sourceId}/{destinationId}/edit",
             method = RequestMethod.GET)
     public String editConnection(
-            @PathVariable int sourceId, 
-            @PathVariable int destinationId, 
+            @PathVariable int sourceId,
+            @PathVariable int destinationId,
             Model model
     ) throws SQLException, NothingWasFoundException {
         LinkConnection connection = connections.getOne(sourceId, destinationId);
 
-        model.addAttribute("connection", connection);
+        model.addAttribute("linkConnection", connection);
         model.addAttribute("roles", users.getCurrentUserRoles());
         return "connectionedit";
     }
@@ -92,33 +93,34 @@ public class LinkConnectionController {
             value = "/{sourceId}/{destinationId}/edit",
             method = RequestMethod.POST)
     public String doEditConnection(
-            @PathVariable int sourceId, 
-            @PathVariable int destinationId, 
-            @Valid LinkConnection connection, 
-            BindingResult bindingResult, 
+            @PathVariable int sourceId,
+            @PathVariable int destinationId,
+            @Valid LinkConnection linkConnection,
+            BindingResult bindingResult,
             Model model
     ) throws SQLException, NothingWasFoundException {
         if(bindingResult.hasErrors()) {
-            model.addAttribute("connection", connection);
+            linkConnection.setSourceLinkId(sourceId);
+            linkConnection.setDestinationLinkId(destinationId);
             model.addAttribute("roles", users.getCurrentUserRoles());
-            return "commentedit";
+            return "connectionedit";
         }
 
-        connections.update(connection);
-
+        linkConnection.setSourceLinkId(sourceId);
+        linkConnection.setDestinationLinkId(destinationId);
+        connections.update(linkConnection);
         return "redirect:/view/"+sourceId;
     }
 
     @Secured({"ROLE_MODERATOR", "ROLE_ADMINISTRATOR"})
     @RequestMapping(
-            value = "/{id}/remove",
+            value = "/{sourceId}/{destinationId}/remove",
             method = RequestMethod.POST)
     public String doDeleteConnection(
-            @PathVariable int sourceId, 
+            @PathVariable int sourceId,
             @PathVariable int destinationId
     ) throws SQLException, NothingWasFoundException {
         connections.delete(sourceId, destinationId);
-
         return "redirect:/view/"+sourceId;
     }
 

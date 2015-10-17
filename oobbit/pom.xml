@@ -5,7 +5,7 @@
 
     <groupId>fi.ooppa</groupId>
     <artifactId>oobbit</artifactId>
-    <version>0.91-RC</version>
+    <version>0.99-RC</version>
     <packaging>jar</packaging>
 
     <name>Oobbit</name>

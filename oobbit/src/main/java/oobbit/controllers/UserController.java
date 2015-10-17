@@ -38,7 +38,7 @@ public class UserController {
         return "me";
     }
 
-    @RequestMapping("/users/{id}")
+    @RequestMapping("/user/{id}")
     public String whois(@PathVariable int id, Model model) throws NothingWasFoundException, SQLException {
         model.addAttribute("user", users.get(id));
         model.addAttribute("roles", users.getCurrentUserRoles());
